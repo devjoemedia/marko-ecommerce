@@ -1,0 +1,72 @@
+import axios from "axios"
+class {
+  onCreate() {
+    this.state = {
+      product: null,
+      category: null,
+      similarProducts: null
+    }
+  }
+  onMount() {
+    let id = this.input.params.id * 1;
+
+    fetch(`https://fakestoreapi.com/products/${id}`)
+      .then(res=>res.json())
+      .then(data=> {
+        this.state.product = data
+        this.state.category = data.category
+      } )
+    
+  }
+
+  onUpdate() {
+    fetch(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
+      .then(res=>res.json())
+      .then(data=> this.state.similarProducts = data)
+  }
+
+  handlePayment(){
+     fetch('/create-checkout-session', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        price: 123.1,
+      }),
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+  }
+}
+
+<app-layout>
+
+  <div>
+    <if(state.product)>
+      <div.product.d-flex.justify-content-between>
+        <img src=state.product.image alt=state.product.title />
+        <div.product__details.ml-3>
+          <h1>${state?.product.title}</h1>
+          <div.d-flex.justify-content-between>
+            <p>$${state.product.price}</p>
+            <p.text-muted>${state.product.category}</p>
+          </div>
+          <p>${state.product.description}</p>
+          <button.btn.btn-primary on-click("handlePayment")>Buy now</button>
+          <!-- <button.btn.btn-primary.ml-3>Add to cart</button> -->
+        </div>
+      </div>
+    </if>
+    
+    <if(state.similarProducts)>
+      <div.products.mt-5>
+        <for|product| of=state.similarProducts>
+          <product-item id=product.id name=product.title price=product.price image=product.image category=product.category />
+        </for>
+      </div>
+    </if>
+  </div>
+</app-layout>
+
+

@@ -1,0 +1,31 @@
+import axios from "axios"
+class {
+  onCreate() {
+    this.state = {
+      products: null
+    }
+  }
+  onMount() {
+    fetch('https://fakestoreapi.com/products?limit=6')
+      .then(res=>res.json())
+      .then(data=> this.state.products = data )
+      
+  }
+}
+
+<app-layout>
+  <div>
+    
+    <if(state.products)>
+      <div.products>
+        <for|product| of=state?.products>
+          <product-item id=product.id name=product.title price=product.price image=product.image category=product.category />
+        </for>  
+      </div>
+    </if>
+    <else>
+      <h1.text-muted>No products found</h1>
+    </else>
+  </div>
+</app-layout>
+  

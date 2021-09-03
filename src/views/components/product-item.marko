@@ -1,0 +1,13 @@
+<div class="card mb-3 product-item">
+  <img src=input.image class="card-img-top" alt="...">
+  <div class="card-body">
+    <div.d-flex>
+      <route-link href=`/products/${input.id}` class="card-title">${input.name.length <= 20 ? input.name : input.name.substring(0, 20)}...</route-link>
+      <small.text-muted.ml-auto>****</small>
+    </div>
+    <div.d-flex>
+      <p class="card-text"><small class="text-muted">${input.category}</small></p>
+      <p class="card-text ml-auto"><small class="text-muted">$${input.price}</small></p>
+    </div>
+  </div>
+</div>

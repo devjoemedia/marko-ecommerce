@@ -1,0 +1,48 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 18px;
+}
+
+.main__sidebar {
+  flex: 0.2;
+}
+
+
+.main__content {
+  flex: 0.75;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.product-item {
+  margin-right: 10px;
+}
+
+
+img {
+  height: 250px;
+}
+
+@media screen and (max-width: 425px) {
+  .main,.product {
+    flex-direction: column;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+}
