@@ -15,8 +15,7 @@ class {
       .then(data=> {
         this.state.product = data
         this.state.category = data.category
-      } )
-    
+      } ) 
   }
 
   onUpdate() {
@@ -32,7 +31,7 @@ class {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        price: 123.1,
+        price: this.state.product.price,
       }),
     })
     .then(data => console.log(data))
@@ -62,7 +61,7 @@ class {
     <if(state.similarProducts)>
       <div.products.mt-5>
         <for|product| of=state.similarProducts>
-          <product-item id=product.id name=product.title price=product.price image=product.image category=product.category />
+          <productCard id=product.id name=product.title price=product.price image=product.image category=product.category />
         </for>
       </div>
     </if>

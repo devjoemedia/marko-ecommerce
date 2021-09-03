@@ -12,6 +12,9 @@ body {
   flex: 0.2;
 }
 
+.fas{
+  color: #ffff5c;
+}
 
 .main__content {
   flex: 0.75;

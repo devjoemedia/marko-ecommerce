@@ -19,7 +19,7 @@ class {
     <if(state.products)>
       <div.products>
         <for|product| of=state?.products>
-          <product-item id=product.id name=product.title price=product.price image=product.image category=product.category />
+          <productCard id=product.id name=product.title price=product.price image=product.image category=product.category />
         </for>  
       </div>
     </if>
