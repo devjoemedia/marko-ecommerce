@@ -2,7 +2,7 @@ import express from 'express';
 import markoMiddleware from '@marko/express';
 import Entrypoint from './views/www.marko';
 // import Stripe from 'stripe';
-const stripe = require('stripe')('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
+const stripe = require('stripe')('stripe_test_key');
 
 // Stripe('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
 
