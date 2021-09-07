@@ -27,6 +27,7 @@ class {
   handlePayment(){
      fetch('/create-checkout-session', {
       method: 'post',
+      //mode: 'no-cors',
       headers: {
         'Content-type': 'application/json',
       },
