@@ -3,8 +3,6 @@ import markoMiddleware from '@marko/express';
 import Entrypoint from './views/www.marko';
 import Stripe from 'stripe';
 const stripe = new Stripe('stripe_testkey');
-
-
 const Assets = require( process.env.RAZZLE_ASSETS_MANIFEST )
 
 const app = express();
