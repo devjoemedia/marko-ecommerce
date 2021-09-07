@@ -22,7 +22,7 @@ class {
     fetch(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
       .then(res=>res.json())
       .then(data=> this.state.similarProducts = data)
-  }
+  } 
 
   handlePayment(){
      fetch('/create-checkout-session', {

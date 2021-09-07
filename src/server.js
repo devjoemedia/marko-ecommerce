@@ -2,7 +2,9 @@ import express from 'express';
 import markoMiddleware from '@marko/express';
 import Entrypoint from './views/www.marko';
 import Stripe from 'stripe';
-const stripe = new Stripe('stripe_testkey');
+import cors from 'cors';
+
+const stripe = new Stripe('sk_test');
 const Assets = require( process.env.RAZZLE_ASSETS_MANIFEST )
 
 const app = express();
@@ -11,6 +13,7 @@ const app = express();
   
 app
 .disable('x-powered-by')
+.use(cors())
 .use( markoMiddleware() ) // Enable res.marko
 .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
 .use(express.json())
@@ -47,6 +50,8 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 
 });
+
+
 // Pages Route Handler
 app.get('/*', (req, res) => {
   const scope = {
