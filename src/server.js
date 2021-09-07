@@ -4,7 +4,7 @@ import Entrypoint from './views/www.marko';
 import Stripe from 'stripe';
 import cors from 'cors';
 
-const stripe = new Stripe('sk_test');
+const stripe = new Stripe('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
 const Assets = require( process.env.RAZZLE_ASSETS_MANIFEST )
 
 const app = express();
@@ -13,9 +13,9 @@ const app = express();
   
 app
 .disable('x-powered-by')
-.use(cors())
 .use( markoMiddleware() ) // Enable res.marko
 .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+.use(cors())
 .use(express.json())
 
 
