@@ -5,6 +5,8 @@ import Stripe from 'stripe';
 import cors from 'cors';
 
 const stripe = new Stripe('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
+
+
 const Assets = require( process.env.RAZZLE_ASSETS_MANIFEST )
 
 const app = express();
@@ -15,13 +17,22 @@ app
 .disable('x-powered-by')
 .use( markoMiddleware() ) // Enable res.marko
 .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-.use(cors())
 .use(express.json())
 
-
+const corsOptions = {
+  origin:'*', 
+  credentials:true, 
+  optionSuccessStatus:200,
+}
+app.use(cors(corsOptions))
+// {
+//   "Access-Control-Allow-Origin":  "*",
+//   "Access-Control-Allow-Methods": "POST",
+//   "Access-Control-Allow-Headers": "Content-Type, Authorization"
+// }
 const YOUR_DOMAIN = 'http://localhost:3000';
 
-app.post('/create-checkout-session', async (req, res) => {
+app.post('/create-checkout-session', cors(), async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -46,7 +57,7 @@ app.post('/create-checkout-session', async (req, res) => {
 
     
   } catch (error) {
-    console.log(error)
+    console.log(error.status)
   }
 
 });

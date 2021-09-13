@@ -29,6 +29,9 @@ body {
   margin-right: 10px;
 }
 
+.cartItem img {
+  height: 100px;
+}
 
 img {
   height: 250px;
