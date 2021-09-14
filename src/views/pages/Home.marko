@@ -5,11 +5,12 @@ class {
       products: null
     }
   }
+  
   onMount() {
-    fetch('https://fakestoreapi.com/products?limit=6')
-      .then(res=>res.json())
-      .then(data=> this.state.products = data )
-      
+    axios.get('https://fakestoreapi.com/products?limit=6')
+      .then(data=> {
+        this.state.products = data.data 
+      })  
   }
 }
 
@@ -19,7 +20,7 @@ class {
     <if(state.products)>
       <div.products>
         <for|product| of=state?.products>
-          <productCard id=product.id name=product.title price=product.price image=product.image category=product.category />
+          <productCard ...product />
         </for>  
       </div>
     </if>

@@ -9,7 +9,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "@marko-tags/context": "^2.2.2",
+    "@marko-tags/context": "^1.1.1",
     "@marko/express": "^1.0.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",

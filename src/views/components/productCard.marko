@@ -1,8 +1,9 @@
+
 <div class="card mb-3 product-item">
   <img src=input.image class="card-img-top" alt="...">
   <div class="card-body">
     <div.d-flex>
-      <route-link href=`/products/${input.id}` class="card-title">${input.name.length <= 20 ? input.name : input.name.substring(0, 20)}...</route-link>
+      <route-link href=`/products/${input.id}` class="card-title">${input?.title.length <= 20 ? input.title : input?.title.substring(0, 20)}...</route-link>
       <small.text-muted.ml-auto>
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>

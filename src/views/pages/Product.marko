@@ -8,38 +8,40 @@ class {
     }
   }
   onMount() {
-    console.log(this.input)
     let id = this.input.params.id * 1;
 
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then(res=>res.json())
+    axios.get(`https://fakestoreapi.com/products/${id}`)
       .then(data=> {
-        this.state.product = data
-        this.state.category = data.category
-      } ) 
+        this.state.product = data.data
+        this.state.category = data.data.category
+      }) 
   }
- 
+    
   onUpdate() {
-    fetch(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
-      .then(res=>res.json())
-      .then(data=> this.state.similarProducts = data)
-  } 
+    axios.get(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
+      .then(data=> {
+        this.state.similarProducts = data.data
+      }) 
+  }
 
-  handlePayment(){
-    axios({
-      method: 'post',
-      url:'/create-checkout-session',
-      data: {
-        price: this.state.product.price
-      }
-    })
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
+  onInput(input) {
+    let id = input.params.id * 1;
+    axios.get(`https://fakestoreapi.com/products/${id}`)
+      .then(data=> {
+        this.state.product = data.data
+        this.state.category = data.data.category
+      })
+
+  }
+
+  addToCart(){
+    console.log("Adding Item to cart")
   }
 }
 
-<app-layout>
 
+
+<app-layout>
   <div>
     <if(state.product)>
       <div.product.d-flex.justify-content-between>
@@ -51,8 +53,9 @@ class {
             <p.text-muted>${state.product.category}</p>
           </div>
           <p>${state.product.description}</p>
-          <button.btn.btn-primary on-click("handlePayment")>Buy now</button>
-          <button.btn.btn-primary.ml-3>Add to cart</button>
+          
+          <button.btn.btn-primary on-click("addToCart")>Add to cart</button>
+            <route-link href="/cart" class="btn btn-primary mx-3">Checkout</route-link>
         </div>
       </div>
     </if>
@@ -60,11 +63,9 @@ class {
     <if(state.similarProducts)>
       <div.products.mt-5>
         <for|product| of=state.similarProducts>
-          <productCard id=product.id name=product.title price=product.price image=product.image category=product.category />
+          <productCard ...product />
         </for>
       </div>
     </if>
   </div>
 </app-layout>
-
-

@@ -15,4 +15,4 @@ export const Routes = [
     { name: '404', path: '/not-found', component: NotFound },
 ] 
 
-App.renderSync({ Routes }).prependTo( document.body);
+App.renderSync({ Routes }).prependTo( document.querySelector('#app'));
