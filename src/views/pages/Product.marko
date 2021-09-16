@@ -1,22 +1,17 @@
-import axios from "axios"
+import axios from "axios";
+
 class {
   onCreate() {
+    sharedState.bind(this, 'stateInfo')
+
     this.state = {
       product: null,
       category: null,
       similarProducts: null
     }
   }
-  onMount() {
-    let id = this.input.params.id * 1;
-
-    axios.get(`https://fakestoreapi.com/products/${id}`)
-      .then(data=> {
-        this.state.product = data.data
-        this.state.category = data.data.category
-      }) 
-  }
-    
+  
+  
   onUpdate() {
     axios.get(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
       .then(data=> {
@@ -35,7 +30,14 @@ class {
   }
 
   addToCart(){
-    console.log("Adding Item to cart")
+    const id = this.input.params.id * 1;
+    const data = sharedState.getState('stateInfo')
+
+    //Gets Item from state
+    const cartItem = data.products.filter(el => el.id === id)
+
+    //Checks if item is already in cart or not
+    data.cart.includes(...cartItem) ? console.log('Item Already in Cart!') : data.cart.push(...cartItem)
   }
 }
 

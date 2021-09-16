@@ -1,3 +1,27 @@
+import SS from 'markojs-shared-state'
+import axios from 'axios'
+
+window.sharedState = new SS()
+
+const initialState = {
+    products:[],
+    cart:[],
+    loading: false,
+}
+
+
+
+
+axios.get('https://fakestoreapi.com/products?limit=6')
+.then(data=> {
+    
+    const stateData = sharedState.getState('stateInfo')
+    
+    stateData.products = data.data 
+}) 
+
+sharedState.setState('stateInfo', initialState)
+
 import App from './views/App.marko';
 import Home from './views/pages/Home';
 import Product from './views/pages/Product';

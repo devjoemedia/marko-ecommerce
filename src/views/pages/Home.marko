@@ -1,22 +1,30 @@
 import axios from "axios"
+
 class {
   onCreate() {
+    sharedState.bind(this, 'stateInfo')
+    const data = sharedState.getState('stateInfo')
+    this.info = data
+
     this.state = {
-      products: null
+      products: data.products
     }
+
+
+    console.log(this.stateInfo)
   }
   
   onMount() {
+    console.log(this.info)
     axios.get('https://fakestoreapi.com/products?limit=6')
-      .then(data=> {
-        this.state.products = data.data 
-      })  
+    .then(data=> {
+      //this.state.products = data.data 
+    })  
   }
 }
 
 <app-layout>
   <div>
-    
     <if(state.products)>
       <div.products>
         <for|product| of=state?.products>

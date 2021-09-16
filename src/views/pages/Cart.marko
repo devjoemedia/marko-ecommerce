@@ -1,4 +1,23 @@
 class {
+  onCreate(){
+    sharedState.bind(this, 'stateInfo')
+
+    const data = sharedState.getState('stateInfo')
+    let total;
+
+    if(data.cart.length > 0) {
+      total = data.cart.reduce((prev, cur) => prev.price + cur.price)
+      
+    }else {
+      total = 0
+    }
+    
+    this.setState('cart', data.cart)
+    this.setState('total', total)
+
+    console.log(this.state,total)
+  }
+
   handlePayment(){
     axios({
       method: 'post',
@@ -10,30 +29,44 @@ class {
     .then(data => console.log(data))
     .catch(err => console.log(err))
   }
+
+  removeFromCart(id){
+    const data = sharedState.getState('stateInfo')
+
+    const cartItems = data.cart.filter(el => el.id !== id)
+
+    data.cart = cartItems
+    this.state.cart = cartItems
+  }
 }
 
 <app-layout>
   <div>
-    <h4>No Item (s) In cart</h4>
-    <div.cartItem.d-flex>
-      <img src="" alt="Poduct Image"/>
-      <h5.mx-3>Compatible bag to hold your laptop</h5>
-      <h2>$22.89</h2>
-      <h2.ml-3.text-warning>X</h2>
-    </div>
-    <div.cartItem.d-flex>
-      <img src="" alt="Poduct Image"/>
-      <h5.mx-3>Compatible bag to hold your laptop</h5>
-      <h2>$22.89</h2>
-      <h2.ml-3.text-warning>X</h2>
-    </div>
-    <div>
-      <h3>
-        Total: <small>$234.33</small>
-      </h3>
+    <if(state.cart.length > 0)>
+      <h4>${state.cart.length} Item (s) In cart</h4>
+      <for|item| of=state.cart>
+        <div.cartItem.d-flex.mb-3>
+          <img src=`${item.image}` alt="Poduct Image"/>
+          <h5.mx-3>${item.title}</h5>
+          <h2 class="ml-auto">$${item.price}</h2>
+          <h2.ml-3.text-warning on-click('removeFromCart',item.id)>X</h2>
+        </div>
+      </for>
       
-      <button.btn.btn-primary on-click("handlePayment")>Pay now</button>
-        <route-link href="/" class="btn btn-primary mx-3">continue shopping</route-link>
-    </div>
+      <div>
+        <h3>
+          Total: <small>$${state.total}</small>
+        </h3>
+        
+        <button.btn.btn-primary on-click("handlePayment")>Pay now</button>
+          <route-link href="/" class="btn btn-primary mx-3">continue shopping</route-link>
+      </div>
+    </if>
+    <else>
+      <h4>No Item In cart</h4>
+    </else>
+    
+    
+    
   </div>
 </app-layout>
