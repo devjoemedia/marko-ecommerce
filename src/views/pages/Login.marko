@@ -1,16 +1,51 @@
+import axios from 'axios'
+
+class {
+  onCreate() {
+    this.state = {
+      password:'',
+      email: ''
+    }
+
+    sharedState.bind(this, ['user'])
+
+  }
+
+  onLogin(e) {
+    e.preventDefault()
+    const {email,password} = this.state
+
+    if(email !== '' && password !== '') {
+
+      axios.post('/login',{email,password})
+      .then(user =>{
+        console.log(user)
+        //if user shareState.setState('user', user)
+        
+      }).catch(err => console.log(err.message))
+      
+
+    }else {
+      console.log('All fields are required!')
+    }
+
+  }
+}
+
+
 <app-layout>
   <!-- Registration Section -->
   <main class="main my-4">
     <div class="form-container px-3">
       <h3>Login </h3>
-      <form>
+      <form on-submit('onLogin')>
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" placeholder="Email">
+          <input type="email" on-change(e=> state.email = e.target.value) value=state.email class="form-control" id="email" placeholder="Email">
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Password">
+          <input type="password" on-change(e=> state.password = e.target.value) value=state.password class="form-control" id="password" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

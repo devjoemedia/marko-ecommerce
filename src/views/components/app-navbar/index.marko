@@ -1,7 +1,7 @@
 class {
   onCreate(){
-    sharedState.bind(this, 'stateInfo')
-    this.state = sharedState.getState('stateInfo')
+    sharedState.bind(this, ['cartCount','cart'])
+
   }
 }
 
@@ -22,7 +22,7 @@ class {
         </li>
         <li class="nav-item ml-3">
           <route-link href="/cart" class="text-muted mr-1">Cart</route-link>
-          <span>${state.cart.length}</span>
+          <span>${state.cartCount}</span>
         </li>
       </ul>
     </div>

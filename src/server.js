@@ -3,7 +3,9 @@ import markoMiddleware from '@marko/express';
 import Entrypoint from './views/www.marko';
 import Stripe from 'stripe';
 import cors from 'cors';
-
+import User from './model/userModel'
+import mongoose from 'mongoose'
+// import dotenv from 'dotenv' 
 const stripe = new Stripe('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
 
 
@@ -11,6 +13,8 @@ const Assets = require( process.env.RAZZLE_ASSETS_MANIFEST )
 
 const app = express();
 
+// Connecting to server
+mongoose.connect("mongodb+srv://joseph:test1234@cluster0.qqbea.mongodb.net/notebook?retryWrites=true&w=majority",{ useNewUrlParser: true,useUnifiedTopology: true ,useCreateIndex:true, useFindAndModify: true }).then(res=> console.log("connection success")).catch(err => console.log(err.message))
  
   
 app
@@ -25,11 +29,7 @@ const corsOptions = {
   optionSuccessStatus:200,
 }
 app.use(cors(corsOptions))
-// {
-//   "Access-Control-Allow-Origin":  "*",
-//   "Access-Control-Allow-Methods": "POST",
-//   "Access-Control-Allow-Headers": "Content-Type, Authorization"
-// }
+
 const YOUR_DOMAIN = 'http://localhost:3000';
 
 app.post('/create-checkout-session', cors(), async (req, res) => {
@@ -61,6 +61,32 @@ app.post('/create-checkout-session', cors(), async (req, res) => {
   }
 
 });
+
+// Authentication
+app.post('/login', async(req, res) => {
+  try {
+    const {email, password} = req.body;
+    const user = await User.find({email, password})
+  
+    if(user) res.send(user)
+    
+  } catch (err) {
+    console.log(err.message);
+  }
+})
+
+app.post('/signup', async(req, res) => {
+
+  try {
+    const user = await User.create(req.body)
+  
+    if(user) res.send(user)
+    
+  } catch (err) {
+    console.log(err.message);  
+  }
+  
+})
 
 
 // Pages Route Handler

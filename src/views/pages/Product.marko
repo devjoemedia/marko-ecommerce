@@ -2,42 +2,51 @@ import axios from "axios";
 
 class {
   onCreate() {
-    sharedState.bind(this, 'stateInfo')
-
+    
     this.state = {
       product: null,
       category: null,
       similarProducts: null
     }
+    sharedState.bind(this, ['products','cartCount','cart'])
   }
   
   
   onUpdate() {
+    let id = this.input.params.id * 1;
+    
+    const product = this.state.products.find(item => item.id === id)
+    this.state.product = product
+    this.state.category = product.category
+
     axios.get(`https://fakestoreapi.com/products/category/${this.state.category}?limit=3`)
-      .then(data=> {
-        this.state.similarProducts = data.data
-      }) 
+    .then(({data}) =>  this.state.similarProducts = data)
   }
-
-  onInput(input) {
+  
+ 
+  onInput(input){
     let id = input.params.id * 1;
-    axios.get(`https://fakestoreapi.com/products/${id}`)
-      .then(data=> {
-        this.state.product = data.data
-        this.state.category = data.data.category
-      })
-
+     
+    const product = this.state.products.find(item => item.id === id)
+    this.state.product = product
   }
 
   addToCart(){
     const id = this.input.params.id * 1;
-    const data = sharedState.getState('stateInfo')
+    let { products, cart, cartCount } = this.state
 
     //Gets Item from state
-    const cartItem = data.products.filter(el => el.id === id)
+    const cartItem = products.filter(el => el.id === id)
 
     //Checks if item is already in cart or not
-    data.cart.includes(...cartItem) ? console.log('Item Already in Cart!') : data.cart.push(...cartItem)
+    if(!cart.includes(...cartItem)){
+      cart.push(...cartItem)
+      cartCount++;
+      sharedState.setState('cartCount', cartCount)
+    }else {
+      console.log('Item Already in Cart!')
+    }
+    
   }
 }
 
@@ -49,7 +58,7 @@ class {
       <div.product.d-flex.justify-content-between>
         <img src=state.product.image alt=state.product.title />
         <div.product__details.ml-3>
-          <h1>${state?.product.title}</h1>
+          <h1>${state.product.title}</h1>
           <div.d-flex.justify-content-between>
             <p>$${state.product.price}</p>
             <p.text-muted>${state.product.category}</p>

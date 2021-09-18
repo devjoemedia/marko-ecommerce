@@ -33,6 +33,9 @@ body {
   height: 100px;
 }
 
+.removeItem{
+  cursor: pointer;
+}
 img {
   height: 250px;
 }

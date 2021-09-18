@@ -12,10 +12,12 @@
     "@marko-tags/context": "^1.1.1",
     "@marko/express": "^1.0.0",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "markojs-shared-state": "^0.3.0",
-    "mongoose": "^5.13.7",
+    "mongoose": "^5.13.9",
     "razzle-plugin-marko": "^1.0.1",
     "stripe": "^8.174.0"
   },
