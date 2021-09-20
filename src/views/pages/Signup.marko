@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import { navigate } from 'marko-router5'
 
 class {
   onCreate() {
@@ -19,10 +20,18 @@ class {
     if(name !== '' && email !== '' && password !== '' && confirmPassword !== '') {
 
       if(confirmPassword === password) {
-        axios.post('/signup',{name,email,password,confirmPassword}).then(({data}) =>{
-        //if user sharedState.setState('user', user)
-        if(data) sharedState.setState('user', data) 
+        axios.post('/signup',{name,email,password,confirmPassword}).then(({ data }) =>{
+        //if user set the user to the state
+        if(data.user){
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          sharedState.setState('user', data.user) 
+          navigate('/')
+        } 
+
         }).catch(err => console.log(err.message))
+      }else {
+        console.log("password did not match!")
       }
 
     }else {

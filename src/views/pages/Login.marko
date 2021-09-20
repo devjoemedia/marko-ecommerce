@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { navigate } from 'marko-router5';
 
 class {
   onCreate() {
@@ -17,11 +18,18 @@ class {
 
     if(email !== '' && password !== '') {
 
-      axios.post('/login',{email,password})
-      .then(user =>{
-        console.log(user)
-        //if user shareState.setState('user', user)
+      axios.post('/login',{ email, password })
+      .then(({data}) => {
+        //if user set the user to the state
         
+        if(data.user){
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          sharedState.setState('user', data.user) 
+  
+          navigate('/')
+        } 
+
       }).catch(err => console.log(err.message))
       
 

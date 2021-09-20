@@ -28,15 +28,14 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() },
 });
 
-userSchema.pre("validate", async function (next) {
-  await bcrypt.hash(this.password, 16, (err, hash) => {
-    if (err) {
-      return console.log(err);
-    }
-    this.password = hash;
-    this.confirmPassword = undefined;
-    next();
-  });
+userSchema.pre('save', async function (next) {
+  if(!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+
+  this.confirmPassword = undefined;
+
+  next();
 });
 
 userSchema.methods.validatePassword = async function (password, userPassword) {

@@ -9,8 +9,14 @@ sharedState.setState('cartCount', 0)
 sharedState.setState('loading', false )
 sharedState.setState('user', null )
 
+const logedInUser = localStorage.getItem('user')
+
+if(logedInUser) sharedState.setState('user', JSON.parse(logedInUser))
+
 axios.get('https://fakestoreapi.com/products?limit=6')
-.then( ({ data }) => sharedState.setState('products', data ) ) 
+.then( ({ data }) => sharedState.setState('products', data ) )
+
+
 
 import App from './views/App.marko';
 import Home from './views/pages/Home';

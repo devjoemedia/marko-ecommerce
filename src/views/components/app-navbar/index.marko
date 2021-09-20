@@ -1,7 +1,16 @@
+import { navigate } from 'marko-router5';
+
 class {
   onCreate(){
-    sharedState.bind(this, ['cartCount','cart'])
+    sharedState.bind(this, ['cartCount','cart','user'])
 
+  }
+
+  onLogout() {
+    localStorage.setItem('user', null)
+    sharedState.setState('user', null)
+
+    navigate('/')
   }
 }
 
@@ -14,12 +23,23 @@ class {
     </button> 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <route-link href="/login" class="text-muted">Login</route-link>
-        </li>
-        <li class="nav-item ml-3">
-          <route-link href="/signup" class="text-muted">Sign up</route-link>
-        </li>
+        <if(state.user)>
+          <li class="nav-item">
+            <route-link href="#" class="text-muted mr-3">${state.user.name}</route-link>
+          </li>
+          <li class="nav-item">
+            <a href="#" on-click('onLogout') class="text-muted">Logout</a>
+          </li>
+        </if>
+        <else>
+          <li class="nav-item">
+            <route-link href="/login" class="text-muted">Login</route-link>
+          </li>
+          <li class="nav-item ml-3">
+            <route-link href="/signup" class="text-muted">Sign up</route-link>
+          </li>
+        </else>
+        
         <li class="nav-item ml-3">
           <route-link href="/cart" class="text-muted mr-1">Cart</route-link>
           <span>${state.cartCount}</span>
