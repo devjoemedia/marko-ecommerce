@@ -1,2 +1,2 @@
-Note App
+Ecommerce web app
 ==============
