@@ -28,6 +28,7 @@ class {
     //Filter item from cart
     cart = cart.filter(el => el.id !== id)
     sharedState.setState('cart', cart)
+    localStorage.setItem('cart', JSON.stringify(cart))
 
     //Update total price of all items in cart
     this.state.total = cart.map(el => el.price *1).reduce((prev, cur) => prev + cur,0)
@@ -35,14 +36,24 @@ class {
     //updating the cartCount state
     cartCount--;
     sharedState.setState('cartCount', cartCount)
-
+    
+  }
+  
+  onClearCart(){
+    sharedState.setState('cart', [])
+    localStorage.setItem('cart', [])
+    sharedState.setState('cartCount', 0)
+    
   }
 }
 
 <app-layout>
   <div>
     <if(state.cart.length > 0)>
-      <h4>${state.cart.length} Item (s) In cart</h4>
+      <div.cart__head.d-flex.mb-3>
+        <h4>${state.cart.length} Item (s) In cart</h4>
+        <button.btn.btn-danger.ml-auto on-click('onClearCart')>clear cart</button>
+      </div>
       
       <for|item| of=state.cart>
         <div.cartItem.d-flex.mb-3>

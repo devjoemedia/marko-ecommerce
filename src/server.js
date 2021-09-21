@@ -98,7 +98,7 @@ app.post('/login', async(req, res) => {
 
     const validUser = await user.validatePassword(password, user.password)
 
-    if(!validUser) res.json({ message: "invalid email or password" })
+    if(!validUser) res.status(403).json({ message: "invalid email or password" })
   
     // Create token
     const token = jwt.sign(
@@ -115,7 +115,15 @@ app.post('/login', async(req, res) => {
      res.cookie('jwt', token, { httpOnly: true });
 
     // return new user
-    res.status(200).json({ user });
+    res.status(200).json({ 
+      message: "success!",
+      user: {
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        createdAt: user.createdAt
+      }
+    });
     
   } catch (err) {
     console.log(err.message);  
@@ -149,7 +157,15 @@ app.post('/signup', async(req, res) => {
      res.cookie('jwt', token, { httpOnly: true });
 
     // return new user
-    res.status(201).json({ message: "user creatd!", user});
+    res.status(201).json({ 
+      message: "user creatd!",
+      user: {
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        createdAt: user.createdAt
+      }
+    });
     
   } catch (err) {
     console.log(err.message);  

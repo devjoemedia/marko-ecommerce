@@ -37,10 +37,11 @@ class {
 
     //Gets Item from state
     const cartItem = products.filter(el => el.id === id)
-
+    
     //Checks if item is already in cart or not
     if(!cart.includes(...cartItem)){
       cart.push(...cartItem)
+      localStorage.setItem('cart', JSON.stringify(cart))
       cartCount++;
       sharedState.setState('cartCount', cartCount)
     }else {

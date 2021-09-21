@@ -9,9 +9,14 @@ sharedState.setState('cartCount', 0)
 sharedState.setState('loading', false )
 sharedState.setState('user', null )
 
-const logedInUser = localStorage.getItem('user')
+const logedInUser = JSON.parse(localStorage.getItem('user'))
+const cart = JSON.parse(localStorage.getItem('cart'))
 
-if(logedInUser) sharedState.setState('user', JSON.parse(logedInUser))
+if(cart) {
+    sharedState.setState('cart', cart)
+    sharedState.setState('cartCount', cart.length)
+} 
+if(logedInUser) sharedState.setState('user', logedInUser)
 
 axios.get('https://fakestoreapi.com/products?limit=6')
 .then( ({ data }) => sharedState.setState('products', data ) )
