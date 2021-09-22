@@ -1,0 +1,18 @@
+class {
+  onCreate() {
+    sharedState.bind(this, ['cart', 'cartCount'])
+    sharedState.setState('cart', [])
+    localStorage.setItem('cart', [])
+    sharedState.setState('cartCount', 0)
+  }
+}
+<div>
+  <app-navbar />
+  <div.checkout_success>
+    <div.checkout_success--inner>
+      <p.display-4.text-center>Payment Successful</p>
+      <p.display-4.text-center>Thank You 👋👋</p>
+    </div>
+  </div>
+</div>
+  

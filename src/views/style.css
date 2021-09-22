@@ -50,6 +50,12 @@ img {
   }
 }
 
+.checkout_success {
+  display: grid;
+  place-items: center;
+  height: 90vh;
+}
+
 @media screen and (max-width: 320px) {
   .products {
     grid-template-columns: 1fr;

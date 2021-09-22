@@ -29,6 +29,7 @@ import Product from './views/pages/Product';
 import Login from './views/pages/Login';
 import Signup from './views/pages/Signup';
 import Cart from './views/pages/Cart';
+import CheckoutSuccess from './views/pages/CheckoutSuccess';
 import NotFound from './views/pages/404'; 
 
 export const Routes = [ 
@@ -37,6 +38,7 @@ export const Routes = [
     { name: 'signup', path: '/signup', component: Signup },
     { name: 'login', path: '/login', component: Login },
     { name: 'cart', path: '/cart', component: Cart },
+    { name: 'success', path: '/checkout/success', component: CheckoutSuccess },
     { name: '404', path: '/not-found', component: NotFound },
 ] 
 

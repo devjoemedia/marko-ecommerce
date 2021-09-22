@@ -46,8 +46,8 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: HOST_URL +'/login',
-      cancel_url: HOST_URL +'/signup',
+      success_url: HOST_URL +'/checkout/success',
+      cancel_url: HOST_URL +'/cart',
       line_items: [
         {
           price_data: {
