@@ -11,20 +11,7 @@ import dotenv from 'dotenv'
 
 
 // Stripe config
-const stripe = new Stripe('sk_test_0PVEGhvryaUeiiRZi7wXkoT800weCuNDAi');
-
-// import ProxyAgent from 'https-proxy-agent';
-
-// const stripe = Stripe('sk_test_...', {
-//   apiVersion: '2019-08-08',
-//   maxNetworkRetries: 1,
-//   httpAgent: new ProxyAgent(process.env.http_proxy),
-//   timeout: 1000,
-//   host: 'api.example.com',
-//   port: 123,
-//   telemetry: true,
-// });
-
+const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 dotenv.config()
 
@@ -50,43 +37,38 @@ app
 .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
 .use(express.json())
 
-const corsOptions = {
-  origin:'*', 
-  credentials:true, 
-  optionSuccessStatus:200,
-}
-app.use(cors(corsOptions))
+app.use(cors({origin: 'http://localhost:3000'}))
 
-const YOUR_DOMAIN = 'http://localhost:3000';
+const HOST_URL = 'http://localhost:3000';
 
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'T-shirt',
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: HOST_URL +'/login',
+      cancel_url: HOST_URL +'/signup',
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Easy-Buy-Mall',
+            },
+            unit_amount: parseInt(req.body.price * 100),
           },
-          unit_amount: 2000,
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: YOUR_DOMAIN +'/login',
-    cancel_url: YOUR_DOMAIN +'/signup',
-  });
-
-  res.redirect(303, session.url);
-
+      ],
+      
+    });
+  
+    res.status(200).json({ url: session.url });
     
-  } catch (error) {
-    console.log(error.status)
+  } catch (err) {
+    res.status(500).json({ error: err })
   }
-
+  
 });
 
 // Authentication
