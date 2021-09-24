@@ -41,30 +41,29 @@ class {
   }
 }
 
-<app-layout>
-  <!-- Registration Section -->
-  <main class="main my-4">
-    <div class="form-container px-3">
-      <h3>Sign up</h3>
-      <form on-submit('onSignup')>
-        <div class="form-group">
-          <label for="full-name">Full Name</label>
-          <input type="text" on-change(e=> state.name = e.target.value) value=state.name class="form-control" id="full-name" placeholder="Full Name">
-        </div>
+<!-- Registration Section -->
+<main class="main my-4 ">
+  <app-navbar />
+  <div class="form-container px-3 form_ctn mt-5">
+    <h3>Sign up</h3>
+    <form on-submit('onSignup')>
       <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" on-change(e=> state.email = e.target.value) value=state.email class="form-control" id="email" placeholder="Email">
+        <label for="full-name">Full Name</label>
+        <input type="text" on-change(e=> state.name = e.target.value) value=state.name class="form-control" id="full-name" placeholder="Full Name">
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" on-change(e=> state.password = e.target.value) value=state.password class="form-control" id="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" on-change(e=> state.confirmPassword = e.target.value) value=state.confirmPassword class="form-control" id="confirm-password" placeholder="Confirm Password">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" on-change(e=> state.email = e.target.value) value=state.email class="form-control" id="email" placeholder="Email">
     </div>
-  </main>
-</app-layout>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" on-change(e=> state.password = e.target.value) value=state.password class="form-control" id="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password" on-change(e=> state.confirmPassword = e.target.value) value=state.confirmPassword class="form-control" id="confirm-password" placeholder="Confirm Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  </div>
+</main>

@@ -25,6 +25,10 @@ body {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.form_ctn {
+  margin: auto;
+  max-width: 500px;
+}
 .product-item {
   margin-right: 10px;
 }
